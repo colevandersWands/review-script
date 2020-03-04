@@ -183,7 +183,7 @@ console.log('\n... generating REVIEWs\n');
 
 
 const interpret = (key, value) => key === 'status'
-  ? value === -1 ? ''
+  ? value === -1 ? ' '
     : value === 0 ? 'pass'
       : value === 1 ? 'fail'
         : value === 2 ? 'error'

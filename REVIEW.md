@@ -1,11 +1,11 @@
 # ./ - syntaxError
 
-> Wed Mar 04 2020, 3:51:00 PM
+> Wed Mar 04 2020, 5:49:07 PM
 
 
 ### exercises
 
-* [no-assertions.js](#no-assertionsjs---) - 
+* [no-assertions.js](#no-assertionsjs--- ) -  
 
 ### sub-directories
 
@@ -14,7 +14,7 @@
 
 ---
 
-## [no-assertions.js](./no-assertions.js) - 
+## [no-assertions.js](./no-assertions.js) -  
 
 ```js
 console.log('hello');

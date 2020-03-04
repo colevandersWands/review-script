@@ -1,6 +1,6 @@
 # examples-2/ - syntaxError
 
-> Wed Mar 04 2020, 3:51:00 PM
+> Wed Mar 04 2020, 5:49:07 PM
 
 * [../REVIEW.md](../REVIEW.md)
 
@@ -22,8 +22,8 @@ x ReferenceError: e is not defined
     at Function.Module._load (internal/modules/cjs/loader.js:556:12)
     at Module.require (internal/modules/cjs/loader.js:683:19)
     at require (internal/modules/cjs/helpers.js:16:16)
-    at evaluateFile ( [...] /review.js:79:5)
-    at  [...] /review.js:106:24
+    at evaluateFile ( [...] /review.js:75:5)
+    at  [...] /review.js:102:24
     at Array.map (<anonymous>)
 ```
 
@@ -50,10 +50,10 @@ SyntaxError: Unexpected token ]
     at Function.Module._load (internal/modules/cjs/loader.js:556:12)
     at Module.require (internal/modules/cjs/loader.js:683:19)
     at require (internal/modules/cjs/helpers.js:16:16)
-    at evaluateFile ( [...] /review.js:79:5)
-    at  [...] /review.js:106:24
+    at evaluateFile ( [...] /review.js:75:5)
+    at  [...] /review.js:102:24
     at Array.map (<anonymous>)
-    at evaluateDirectory ( [...] /review.js:106:8)
+    at evaluateDirectory ( [...] /review.js:102:8)
 ```
 
 ```js
