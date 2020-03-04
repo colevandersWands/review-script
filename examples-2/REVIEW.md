@@ -1,13 +1,13 @@
 # examples-2/ - syntaxError
 
-> Wed Mar 04 2020, 3:41:45 PM
+> Wed Mar 04 2020, 3:51:00 PM
 
 * [../REVIEW.md](../REVIEW.md)
+
 ### exercises
 
 * [execution-error.js](#execution-errorjs---error) - error
 * [syntax-error.js](#syntax-errorjs---syntaxError) - syntaxError
-
 
 ---
 
