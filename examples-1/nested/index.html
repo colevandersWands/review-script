@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf8'>
+  <title>nested/</title>
+  <style>
+    textarea {
+      height: 75vh;
+      width: 95vw;
+    }
+  </style>
+  <script>
+    function inJsTutor(id) {
+      const source = document.getElementById(id).value;
+      const encoded = encodeURIComponent(source);
+      const sanitized = encoded.replace(/\(/g, '%28').replace(/\)/g, '%29');
+      const deTabbed = sanitized.replace(/%09/g, '%20%20');
+      const jsTutorUrl = "http://www.pythontutor.com/live.html#code="
+        + deTabbed
+        + "&cumulative=false&curInstr=2&heapPrimitives=false&mode=display&origin=opt-live.js&py=js&rawInputLstJSON=%5B%5D&textReferences=false";
+      window.open(jsTutorUrl, '_blank');
+    }
+  </script>
+  <script>
+    function inDebugger(id) {
+      const source = document.getElementById(id).value;
+      const debuggered = "debugger; // injected by review.js\n\n" + source;
+      eval(debuggered);
+    }
+  </script>
+</head>
+
+<body>
+
+  <header>
+    <h1 id='top'>nested/ - fail</h1>
+    <code>Wed Mar 04 2020, 3:41:45 PM</code>
+  </header>
+
+  <br>
+
+  <li><a href="../index.html">../index.html</a></li>
+
+  <h3>exercises</h3
+  <ul>
+      <li><a href='#failing.js'>failing.js</a> - fail</li>
+
+  </ul>
+
+<br>  
+  <hr>
+
+  <section  id="failing.js">
+    <h2>failing.js - fail</h2>
+    <button onclick="inDebugger('./examples-1/nested/failing.js')">step through in debugger</button>
+    <button onclick="inJsTutor('./examples-1/nested/failing.js')">open in JS Tutor</button>
+    <br>
+    <br>
+    <textarea id="./examples-1/nested/failing.js">
+console.assert(false, 'failing');
+
+    </textarea>
+    <br>
+    <br>
+    <a href='#top'>TOP</a>
+  </section>
+  <br>
+
+</body>
+
+</html>

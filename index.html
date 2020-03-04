@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf8'>
+  <title>./</title>
+  <style>
+    textarea {
+      height: 75vh;
+      width: 95vw;
+    }
+  </style>
+  <script>
+    function inJsTutor(id) {
+      const source = document.getElementById(id).value;
+      const encoded = encodeURIComponent(source);
+      const sanitized = encoded.replace(/\(/g, '%28').replace(/\)/g, '%29');
+      const deTabbed = sanitized.replace(/%09/g, '%20%20');
+      const jsTutorUrl = "http://www.pythontutor.com/live.html#code="
+        + deTabbed
+        + "&cumulative=false&curInstr=2&heapPrimitives=false&mode=display&origin=opt-live.js&py=js&rawInputLstJSON=%5B%5D&textReferences=false";
+      window.open(jsTutorUrl, '_blank');
+    }
+  </script>
+  <script>
+    function inDebugger(id) {
+      const source = document.getElementById(id).value;
+      const debuggered = "debugger; // injected by review.js\n\n" + source;
+      eval(debuggered);
+    }
+  </script>
+</head>
+
+<body>
+
+  <header>
+    <h1 id='top'>./ - syntaxError</h1>
+    <code>Wed Mar 04 2020, 3:41:45 PM</code>
+  </header>
+
+    <h3>exercises</h3
+  <ul>
+      <li><a href='#no-assertions.js'>no-assertions.js</a> - </li>
+
+  </ul>
+
+  <h3>sub-directories</h3
+  <ul>
+      <li><a href='./examples-1/index.html'>examples-1/</a> - fail</li>
+      <li><a href='./examples-2/index.html'>examples-2/</a> - syntaxError</li>
+
+  </ul>
+
+<br>  
+  <hr>
+
+  <section  id="no-assertions.js">
+    <h2>no-assertions.js - </h2>
+    <button onclick="inDebugger('./no-assertions.js')">step through in debugger</button>
+    <button onclick="inJsTutor('./no-assertions.js')">open in JS Tutor</button>
+    <br>
+    <br>
+    <textarea id="./no-assertions.js">
+console.log('hello');
+
+    </textarea>
+    <br>
+    <br>
+    <a href='#top'>TOP</a>
+  </section>
+  <br>
+
+</body>
+
+</html>
