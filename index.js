@@ -5,6 +5,39 @@ const BASE_DIRECTORY = process.argv[2] || './';
 
 const IGNORE = ['node_modules'];
 
+const { USER, REPO } = (() => {
+  let user = '', repo = '';
+  try { // remote name can be a user-provided parameter
+    const gitConfig = fs.readFileSync('./.git/config', 'utf-8');
+    const originIndex = gitConfig.indexOf('[remote "origin"]');
+    const originURL = gitConfig
+      .slice(originIndex, gitConfig.length)
+      .split('\n')[1];
+    const userAndRepoDotGit = originURL
+      .split(':')[1];
+    const userAndRepoStr = userAndRepoDotGit
+      .split('.')[0];
+    const userAndRepo = userAndRepoStr
+      .split('/');
+    user = userAndRepo[0];
+    repo = userAndRepo[1];
+  } catch (err) {
+    console.log(err);
+  }
+  return {
+    USER: user,
+    REPO: repo
+  };
+})();
+
+// hardcode for github & master at this point
+const SOURCE_URL = (USER && REPO)
+  ? `https://github.com/${USER}/${REPO}/tree/master/`
+  : '';
+const LIVE_URL = (USER && REPO)
+  ? `https://${USER}.github.io/${REPO}/`
+  : '';
+
 console.log('\n... scanning for all .js files\n');
 
 const registerDirectory = function (dirPath, oldPath) {
@@ -202,13 +235,8 @@ const generateFileSectionMd = (fileReport) => {
   const relPath = fileReport.path.split('/').pop();
   const header = `## [${relPath}](./${relPath}) - ${interpret('status', fileReport.status)}`;
 
-  // const encoded = encodeURIComponent(fileReport.source);
-  // const sanitized = encoded.replace(/\(/g, '%28').replace(/\)/g, '%29');
-  // const deTabbed = sanitized.replace(/%09/g, '%20%20');
-  // const jsTutorUrl = "http://www.pythontutor.com/live.html#code="
-  //   + deTabbed
-  //   + "&cumulative=false&curInstr=2&heapPrimitives=false&mode=display&origin=opt-live.js&py=js&rawInputLstJSON=%5B%5D&textReferences=false";
-  // const jsTutorLink = `* [open in JS Tutor](${jsTutorUrl})`
+  // const liveLink = LIVE_URL
+  //   ? `* [study in devtools](${LIVE_URL}${})`
 
   const renderedReport = fileReport.report
     .map(entry => {
