@@ -3,6 +3,7 @@ const path = require("path")
 
 const BASE_DIRECTORY = process.argv[2] || './';
 
+const IGNORE = ['node_modules'];
 
 console.log('\n... scanning for all .js files\n');
 
@@ -13,6 +14,7 @@ const registerDirectory = function (dirPath, oldPath) {
   const arrayOfFiles = [];
   const arrayOfDirs = [];
   for (let nextPath of paths) {
+    if (IGNORE.indexOf(nextPath) >= 0) continue;
     if ('/' + nextPath === thisFileName) continue;
 
     const isDirectory = fs.statSync(dirPath + '/' + nextPath).isDirectory();
