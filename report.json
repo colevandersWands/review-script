@@ -1,41 +1,44 @@
 {
   "path": "./",
-  "status": 3,
-  "time": "2020-03-05T10:29:18.081Z",
+  "status": 5,
+  "time": "2020-03-05T20:50:58.673Z",
   "files": [
     {
       "path": "./no-assertions.js",
-      "status": -1,
+      "status": 0,
       "source": "console.log('hello');\n"
     }
   ],
   "dirs": [
     {
       "path": "./examples-1/",
-      "status": 1,
-      "time": "2020-03-05T10:29:18.077Z",
+      "status": 2,
+      "time": "2020-03-05T20:50:58.660Z",
       "files": [
         {
           "path": "./examples-1/passing.js",
-          "status": 0,
-          "source": "console.assert(true, 'passing assert')\n"
+          "status": 1,
+          "source": "console.assert(true, 'passing assert')\n",
+          "example": true
         }
       ],
       "dirs": [
         {
           "path": "./examples-1/nested/",
-          "status": 1,
-          "time": "2020-03-05T10:29:18.076Z",
+          "status": 2,
+          "time": "2020-03-05T20:50:58.660Z",
           "files": [
             {
               "path": "./examples-1/nested/empty.js",
-              "status": -1,
-              "source": ""
+              "status": 0,
+              "source": "",
+              "example": true
             },
             {
               "path": "./examples-1/nested/failing.js",
-              "status": 1,
-              "source": "console.assert(false, 'failing');\n"
+              "status": 2,
+              "source": "console.assert(false, 'failing');\n",
+              "example": true
             }
           ],
           "dirs": null
@@ -44,18 +47,39 @@
     },
     {
       "path": "./examples-2/",
-      "status": 3,
-      "time": "2020-03-05T10:29:18.081Z",
+      "status": 5,
+      "time": "2020-03-05T20:50:58.666Z",
       "files": [
         {
           "path": "./examples-2/execution-error.js",
-          "status": 2,
-          "source": "e();\n"
+          "status": 4,
+          "source": "e();\n",
+          "example": true
+        },
+        {
+          "path": "./examples-2/infinite-loop.js",
+          "status": 3,
+          "source": "while (true) {\n\n}\n",
+          "example": true
         },
         {
           "path": "./examples-2/syntax-error.js",
-          "status": 3,
-          "source": "; {] }\n"
+          "status": 5,
+          "source": "; {] }\n",
+          "example": true
+        }
+      ],
+      "dirs": null
+    },
+    {
+      "path": "./node_modules/",
+      "status": 4,
+      "time": "2020-03-05T20:50:58.673Z",
+      "files": [
+        {
+          "path": "./node_modules/hi.js",
+          "status": 4,
+          "source": "throw new Error('this should not be read');\n"
         }
       ],
       "dirs": null

@@ -35,7 +35,7 @@
 
   <header>
     <h1 id='top'>examples-2/ - syntaxError</h1>
-    <code>Thu Mar 05 2020, 11:29:18 AM</code>
+    <code>Thu Mar 05 2020, 9:50:58 PM</code>
   </header>
 
   <br>
@@ -45,6 +45,7 @@
   <h3>exercises</h3
   <ul>
       <li><a href='#execution-error.js'>execution-error.js</a> - error</li>
+      <li><a href='#infinite-loop.js'>infinite-loop.js</a> - warning</li>
       <li><a href='#syntax-error.js'>syntax-error.js</a> - syntaxError</li>
 
   </ul>
@@ -60,6 +61,26 @@
     <br>
     <textarea id="./examples-2/execution-error.js">
 e();
+
+    </textarea>
+    <br>
+    <br>
+    <a href='#top'>TOP</a>
+  </section>
+  <br>
+
+  <hr>
+
+  <section  id="infinite-loop.js">
+    <h2>infinite-loop.js - warning</h2>
+    <button onclick="inDebugger('./examples-2/infinite-loop.js')">step through in debugger</button>
+    <button onclick="inJsTutor('./examples-2/infinite-loop.js')">open in JS Tutor</button>
+    <br>
+    <br>
+    <textarea id="./examples-2/infinite-loop.js">
+while (true) {
+
+}
 
     </textarea>
     <br>

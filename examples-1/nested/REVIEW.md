@@ -1,23 +1,23 @@
 # nested/ - fail
 
-> Thu Mar 05 2020, 11:29:18 AM
+> Thu Mar 05 2020, 9:50:58 PM
 
 * [../REVIEW.md](../REVIEW.md)
 
 ### exercises
 
-* [empty.js](#emptyjs--- ) -  
+* [empty.js](#emptyjs---no assertions) - no assertions
 * [failing.js](#failingjs---fail) - fail
 
 ---
 
-## [empty.js](./empty.js) -  
+##[empty.js](./empty.js) - no assertions
 
 [TOP](#readme)
 
 ---
 
-## [failing.js](./failing.js) - fail
+##[failing.js](./failing.js) - fail
 
 ```txt
 - FAIL: failing
