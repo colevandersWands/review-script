@@ -1,6 +1,6 @@
 # ./ - syntaxError
 
-> Thu Mar 05 2020, 9:52:30 PM
+> Thu Mar 05 2020, 9:54:55 PM
 
 
 ### exercises
@@ -11,7 +11,6 @@
 
 * [examples-1/](./examples-1/REVIEW.md) - fail
 * [examples-2/](./examples-2/REVIEW.md) - syntaxError
-* [node_modules/](./node_modules/REVIEW.md) - error
 
 ---
 

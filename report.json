@@ -1,7 +1,7 @@
 {
   "path": "./",
   "status": 5,
-  "time": "2020-03-05T20:52:30.251Z",
+  "time": "2020-03-05T20:54:55.151Z",
   "files": [
     {
       "path": "./no-assertions.js",
@@ -13,7 +13,7 @@
     {
       "path": "./examples-1/",
       "status": 2,
-      "time": "2020-03-05T20:52:30.243Z",
+      "time": "2020-03-05T20:54:55.138Z",
       "files": [
         {
           "path": "./examples-1/passing.js",
@@ -26,7 +26,7 @@
         {
           "path": "./examples-1/nested/",
           "status": 2,
-          "time": "2020-03-05T20:52:30.243Z",
+          "time": "2020-03-05T20:54:55.138Z",
           "files": [
             {
               "path": "./examples-1/nested/empty.js",
@@ -48,7 +48,7 @@
     {
       "path": "./examples-2/",
       "status": 5,
-      "time": "2020-03-05T20:52:30.250Z",
+      "time": "2020-03-05T20:54:55.150Z",
       "files": [
         {
           "path": "./examples-2/execution-error.js",
@@ -67,19 +67,6 @@
           "status": 5,
           "source": "; {] }\n",
           "example": true
-        }
-      ],
-      "dirs": null
-    },
-    {
-      "path": "./node_modules/",
-      "status": 4,
-      "time": "2020-03-05T20:52:30.251Z",
-      "files": [
-        {
-          "path": "./node_modules/hi.js",
-          "status": 4,
-          "source": "throw new Error('this should not be read');\n"
         }
       ],
       "dirs": null

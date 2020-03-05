@@ -23,7 +23,7 @@ const CONFIG = {
   user: 'colevandersWands',
   repo: 'review-script',
   root: process.argv[2] || './',
-  ignore: ['.git', 'review.js', 'node_module'],
+  ignore: ['.git', 'review.js', 'node_modules'],
   examples: ['example', 'worked', 'stepped'],
   maxIterations: 1000
 }
@@ -41,7 +41,7 @@ const registerDirectory = function (dirPath, oldPath) {
   const arrayOfFiles = [];
   const arrayOfDirs = [];
   for (let nextPath of paths) {
-    if (CONFIG.ignore.indexOf(nextPath) >= 0) continue;
+    if (CONFIG.ignore.indexOf(nextPath) !== -1) continue;
 
     const isDirectory = fs.statSync(dirPath + '/' + nextPath).isDirectory();
     if (!isDirectory && path.extname(nextPath) !== '.js') continue;
