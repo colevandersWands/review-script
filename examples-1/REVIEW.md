@@ -1,6 +1,6 @@
 # examples-1/ - fail
 
-> Thu Mar 05 2020, 12:20:34 PM
+> Thu Mar 05 2020, 9:52:30 PM
 
 * [../REVIEW.md](../REVIEW.md)
 
@@ -14,7 +14,7 @@
 
 ---
 
-## [passing.js](./passing.js) - pass
+##[passing.js](./passing.js) - pass
 
 ```txt
 + PASS: passing assert

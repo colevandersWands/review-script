@@ -1,60 +1,52 @@
-const fs = require("fs")
-const path = require("path")
+/* what's the best way to handle examples?
+  a third heading
+    exercises
+    examples
+    sub-directories
+  a directory with an example key word
+    recursively treat everything below it as an example
+    but do label it all?
+  don't factor example statuses into directory status
+  flatten sub-directories of examples into the table of contents?
+  conventionalize examples & exercises?
+    topic/
+      sub-topic/
+      examples/
+      exercises/
+      README.md
+      REVIEW.md
+      index.html
 
-const BASE_DIRECTORY = process.argv[2] || './';
+*/
 
-const IGNORE = ['node_modules'];
+const CONFIG = {
+  user: 'colevandersWands',
+  repo: 'review-script',
+  root: process.argv[2] || './',
+  ignore: ['.git', 'review.js', 'node_module'],
+  examples: ['example', 'worked', 'stepped'],
+  maxIterations: 1000
+}
 
-const { USER, REPO } = (() => {
-  let user = '', repo = '';
-  try { // remote name can be a user-provided parameter
-    const gitConfig = fs.readFileSync('./.git/config', 'utf-8');
-    const originIndex = gitConfig.indexOf('[remote "origin"]');
-    const originURL = gitConfig
-      .slice(originIndex, gitConfig.length)
-      .split('\n')[1];
-    const userAndRepoDotGit = originURL
-      .split(':')[1];
-    const userAndRepoStr = userAndRepoDotGit
-      .split('.')[0];
-    const userAndRepo = userAndRepoStr
-      .split('/');
-    user = userAndRepo[0];
-    repo = userAndRepo[1];
-  } catch (err) {
-    console.log(err);
-  }
-  return {
-    USER: user,
-    REPO: repo
-  };
-})();
+const fs = require("fs");
+const path = require("path");
 
-// hardcode for github & master at this point
-const SOURCE_URL = (USER && REPO)
-  ? `https://github.com/${USER}/${REPO}/tree/master/`
-  : '';
-const LIVE_URL = (USER && REPO)
-  ? `https://${USER}.github.io/${REPO}/`
-  : '';
+
 
 console.log('\n... scanning for all .js files\n');
 
 const registerDirectory = function (dirPath, oldPath) {
   paths = fs.readdirSync(dirPath)
 
-  const thisFileName = __filename.split(__dirname).join('');
   const arrayOfFiles = [];
   const arrayOfDirs = [];
   for (let nextPath of paths) {
-    if (IGNORE.indexOf(nextPath) >= 0) continue;
-    if ('/' + nextPath === thisFileName) continue;
+    if (CONFIG.ignore.indexOf(nextPath) >= 0) continue;
 
     const isDirectory = fs.statSync(dirPath + '/' + nextPath).isDirectory();
     if (!isDirectory && path.extname(nextPath) !== '.js') continue;
 
     if (isDirectory) {
-      if (nextPath[0] === '.') continue; // ignore hidden folders
       const subDirs = registerDirectory(dirPath + '/' + nextPath, dirPath);
       arrayOfDirs.push(subDirs);
     } else {
@@ -76,21 +68,31 @@ const registerDirectory = function (dirPath, oldPath) {
   }
 }
 
-const allJsFiles = registerDirectory(BASE_DIRECTORY);
+const allJsFiles = registerDirectory(CONFIG.root);
 // console.log(JSON.stringify(allJsFiles, null, '  '));
 
 
 console.log('\n... evaluating .js files & building report\n');
 
-/* statuses
-  0: pass
-  1: fail
-  2: error
-  3: syntax error
-*/
+
+const interpret = (key, value) => key === 'status'
+  ? value === -1 ? 'not evaluated'
+    : value === 0 ? 'no assertions'
+      : value === 1 ? 'pass'
+        : value === 2 ? 'fail'
+          : value === 3 ? 'warning'
+            : value === 4 ? 'error'
+              : value === 5 ? 'syntaxError'
+                : 'unknown status'
+  : value;
+
+
 const evaluateFile = (path) => {
   console.log('\n... ' + path + '\n');
+
+  let status = -1;
   let report = [];
+
   const nativeAssert = console.assert;
   let hasFailed = false;
   console.assert = function () {
@@ -100,32 +102,58 @@ const evaluateFile = (path) => {
       assertion: arguments
     });
     if (!arguments[0] || hasFailed) {
-      status = 1;
+      status = 2;
     } else {
-      status = 0;
+      status = 1;
     }
   }
-  let status = -1;
+
+  const rawCode = fs.readFileSync(path, 'utf-8');
+  let number_of_loops = 0;
+  const loopProtectedCode = rawCode
+    .replace(/for *\(.*\{|while *\(.*\{|do *\{/g, loopHead => {
+      number_of_loops++;
+      return `let _${number_of_loops} = 0; ${loopHead} if (++_${number_of_loops} > ${CONFIG.maxIterations}) {throw 'over ${CONFIG.maxIterations} iterations'};`
+    });
+  fs.writeFileSync(path, loopProtectedCode);
   try {
     require(path); // using require for cleaner callstack
     // const code = fs.readFileSync(path, 'utf-8');
     // eval(code);
-  } catch (err) {
-
-    if (err.stack.includes('SyntaxError')) {
+  } catch (thrown) {
+    console.log(thrown)
+    if (typeof thrown === 'string') {
       status = 3;
+      report.push({
+        warning: thrown
+      });
     } else {
-      status = 2;
+      if (thrown.stack.includes('SyntaxError:')) {
+        status = 5;
+      } else {
+        status = 4;
+      };
+      report.push({
+        error: thrown.stack
+          .split(__dirname).join(' [...] ')
+      });
     };
-    report.push({
-      error: err.stack
-        .split(__dirname).join(' [...] ')
-    });
   }
   console.assert = nativeAssert;
-  const source = fs.readFileSync(path, 'utf-8');
+  fs.writeFileSync(path, rawCode);
 
-  return { path, status, source, report };
+  if (status === -1) status = 0;
+
+  return { path, status, source: rawCode, report };
+}
+
+const isExample = path => {
+  const keyMatch = CONFIG.examples
+    .reduce((acc, nextKeyWord) =>
+      acc || path.includes(nextKeyWord),
+      false);
+  // return undefined so the non-example keys disappear when stringified
+  return keyMatch ? true : undefined;
 }
 
 const evaluateDirectory = (toReport, path) => {
@@ -134,7 +162,11 @@ const evaluateDirectory = (toReport, path) => {
 
   const files = toReport.files
     ? toReport.files
-      .map(fileName => evaluateFile(path + fileName))
+      .map(fileName => {
+        const fileReport = evaluateFile(path + fileName);
+        fileReport.example = isExample(fileReport.path);
+        return fileReport;
+      })
     : toReport.files;
 
   const dirs = toReport.dirs
@@ -217,23 +249,12 @@ writeJsonReportsLight(evaluation);
 console.log('\n... generating REVIEWs\n');
 
 
-const interpret = (key, value) => key === 'status'
-  ? value === -1 ? ' '
-    : value === 0 ? 'pass'
-      : value === 1 ? 'fail'
-        : value === 2 ? 'error'
-          : value === 3 ? 'syntaxError'
-            : 'unknown status'
-  : value;
-
-
-
 const generateFileSectionMd = (fileReport) => {
 
   const divider = '---';
 
   const relPath = fileReport.path.split('/').pop();
-  const header = `## [${relPath}](./${relPath}) - ${interpret('status', fileReport.status)}`;
+  const header = `##[${relPath}](./${relPath}) - ${interpret('status', fileReport.status)}`;
 
   // const liveLink = LIVE_URL
   //   ? `* [study in devtools](${LIVE_URL}${})`
@@ -244,6 +265,9 @@ const generateFileSectionMd = (fileReport) => {
         return entry.error.includes('SyntaxError')
           ? entry.error
           : 'x ' + entry.error;
+      }
+      if (entry.warning) {
+        return 'warning: ' + entry.warning;
       }
       if (entry.assertion) {
         const assertion = entry.assertion[0]
