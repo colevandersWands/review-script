@@ -29,13 +29,31 @@
       eval(debuggered);
     }
   </script>
+  <script>
+    // temporary solution, can't change focus like this
+    window.onload = () => {
+      const textAreas = document.getElementsByTagName('textarea');
+      const count = textAreas.length;
+      for (let i = 0; i < count; i++) {
+        textAreas[i].onkeydown = function(e) {
+          if(e.keyCode === 9 || e.which === 9){
+            e.preventDefault();
+            const oldLength = this.selectionStart;
+            this.value = this.value.substring(0, this.selectionStart)
+              + "  " + this.value.substring(this.selectionEnd);
+            this.selectionEnd = oldLength + 2;
+          }
+        }
+      }
+    };
+  </script>
 </head>
 
 <body>
 
   <header>
     <h1 id='top'>./ - syntaxError</h1>
-    <code>Thu Mar 05 2020, 11:29:18 AM</code>
+    <code>Thu Mar 05 2020, 12:20:34 PM</code>
   </header>
 
     <h3>exercises</h3

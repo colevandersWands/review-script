@@ -441,12 +441,32 @@ const generateIndexHtml = (report) => {
     }
   </script>`
 
+  const tabability = `<script>
+    // temporary solution, can't change focus like this
+    window.onload = () => {
+      const textAreas = document.getElementsByTagName('textarea');
+      const count = textAreas.length;
+      for (let i = 0; i < count; i++) {
+        textAreas[i].onkeydown = function(e) {
+          if(e.keyCode === 9 || e.which === 9){
+            e.preventDefault();
+            const oldLength = this.selectionStart;
+            this.value = this.value.substring(0, this.selectionStart)
+              + "  " + this.value.substring(this.selectionEnd);
+            this.selectionEnd = oldLength + 2;
+          }
+        }
+      }
+    };
+  </script>`
+
   const head = '<head>\n'
     + "  <meta charset='utf8'>\n"
     + `  <title>${dirName(report.path)}</title>\n`
     + '  ' + textAreaStyle + '\n'
     + '  ' + inJsTutorScript + '\n'
     + '  ' + inDebuggerScript + '\n'
+    + '  ' + tabability + '\n'
     + '</head>\n';
 
   const header = `<header>
