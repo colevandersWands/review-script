@@ -14,7 +14,7 @@
 
 ---
 
-##[no-assertions.js](./no-assertions.js) - no assertions
+## [no-assertions.js](./no-assertions.js) - no assertions
 
 ```js
 console.log('hello');
